@@ -20,16 +20,24 @@ if __name__ == '__main__':
     # print(myList.remove(node2))
     # print(myList.remove(node3))
     # print("Okay")
-    lruCache = LRUCache(4)
-    lruCache.set("key1", "value1")
-    lruCache.set("key2", "value2")
-    lruCache.set("key3", "value3")
-    lruCache.set("key4", "value4")
-    lruCache.set("key5", "value5")
+    # lruCache = LRUCache(2)
+    # lruCache.set("2", "1")
+    # lruCache.set("1", "1")
+    # print(lruCache.get("2"))
+    #
+    # lruCache.set("4", "1")
+    # print(lruCache.get("1"))
+    # print(lruCache.get("2"))
+    #lruCache.set("2", "2")
 
-    lruCache.rem("key3")
+    cache = LRUCache(100)
+    cache.set('Jesse', 'Pinkman')
+    cache.set('Walter', 'White')
+    cache.set('Jesse', 'James')
+    print(cache.get('Jesse'))  # вернёт 'James'
+    cache.rem('Walter')
+    print(cache.get('Walter'))  # вернёт ''
 
-    print(lruCache.get("key3"))
 
 
 # See PyCharm help at https://www.jetbrains.com/help/pycharm/

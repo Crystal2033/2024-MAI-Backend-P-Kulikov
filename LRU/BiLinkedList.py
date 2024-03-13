@@ -23,21 +23,21 @@ class BiLinkedList:
             self.head = node
         return node
 
-    def removeOlderElement(self):
+    def remove_elder_element(self):
         return self.remove(self.tail)
 
     def remove(self, node: Node):
-        if node.keyValue[1] == self.head.keyValue[1] and node.keyValue[1] == self.tail.keyValue[1]:
+        if node.keyValue == self.head.keyValue and node.keyValue == self.tail.keyValue:
             self.head = self.tail = None
-        elif node.keyValue[1] == self.tail.keyValue[1]:
+        elif node.keyValue == self.tail.keyValue:
             self.tail.next.prev = None
             self.tail = self.tail.next
             node.next = None
-        elif node.keyValue[1] == self.head.keyValue[1]:
+        elif node.keyValue == self.head.keyValue:
             self.head.prev.next = None
             self.head = self.head.prev
             node.prev = None
         else:
             node.next.prev = node.prev
             node.prev.next = node.next
-        return node.keyValue[0]
+        return node.keyValue
