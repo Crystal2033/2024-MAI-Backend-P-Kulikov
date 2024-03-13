@@ -7,13 +7,13 @@ class LRUCache:
     mapWithLinksToNodes = {}
     capacity = 0
 
-    def __init__(self, capacity: int=10) -> None:
+    def __init__(self, capacity: int = 10) -> None:
         self.capacity = capacity
         self.biLinkedList = BiLinkedList()
 
     def get(self, key: str) -> str:
         if key not in self.mapWithLinksToNodes:
-            return ""
+            return "None"
         else:
             return self.mapWithLinksToNodes[key].getValue()
 
@@ -29,3 +29,4 @@ class LRUCache:
 
     def rem(self, key: str) -> None:
         self.biLinkedList.remove(self.mapWithLinksToNodes[key])
+        self.mapWithLinksToNodes.pop(key)
