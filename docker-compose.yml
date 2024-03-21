@@ -1,0 +1,9 @@
+services:
+  nginx:
+    build:
+      context: .
+    container_name: nginxFront
+    ports:
+      - 9999:81 # map host -> docker, 81 because port 80 is for default conf.d
+    volumes:
+      - ./webserver/public:/etc/nginx/public
