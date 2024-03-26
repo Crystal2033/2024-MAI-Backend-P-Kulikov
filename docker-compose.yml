@@ -8,24 +8,24 @@ services:
     networks:
       main:
         aliases:
-          - web
+          - web-net
 
   nginx:
     build:
       context: configurations/nginx
     container_name: nginxFront
-    links:
-      - web:web
+#    links:
+#      - web:web
     depends_on:
       - web
     ports:
       - 8080:81 # map: host -> docker, 81 because port 80 is for default conf.d
     volumes:
-      - ./webserver/public:/etc/nginx/public
+      - ./webserver_static_files/public:/etc/nginx/public # shared memory map: my_path:docker_unix_path
     networks:
       main:
         aliases:
-          - nginx
+          - nginx-net
 
 networks:
   main:
