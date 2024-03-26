@@ -1,9 +1,31 @@
 services:
+  web:
+    container_name: wsgi_app
+    build:
+      context: configurations/python-deps
+    ports:
+      - 8000:81
+    networks:
+      main:
+        aliases:
+          - web
+
   nginx:
     build:
-      context: .
+      context: configurations/nginx
     container_name: nginxFront
+    links:
+      - web:web
+    depends_on:
+      - web
     ports:
-      - 8080:81 # map host -> docker, 81 because port 80 is for default conf.d
+      - 8080:81 # map: host -> docker, 81 because port 80 is for default conf.d
     volumes:
       - ./webserver/public:/etc/nginx/public
+    networks:
+      main:
+        aliases:
+          - nginx
+
+networks:
+  main:
