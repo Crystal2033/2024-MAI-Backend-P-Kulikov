@@ -1,9 +1,10 @@
 from django.shortcuts import render, HttpResponse
 from django.http import JsonResponse
 
-# Create your views here.
+from .my_models.Candle import Candle
 
 
+# Create your views_pack here.
 def check_json(request):
     return JsonResponse({"name": "Paul", "age": 22})
 

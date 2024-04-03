@@ -26,7 +26,8 @@ SECRET_KEY = 'django-insecure-g9pvat^35@mli4j@9)myow15avu_9#3+^h_i(t8!u@=#q&7@qc
 DEBUG = True
 
 ALLOWED_HOSTS = [
-    "host.docker.internal"
+    "host.docker.internal",
+    "127.0.0.1"
 ]
 
 
@@ -57,7 +58,7 @@ ROOT_URLCONF = 'candelae.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': ["candelae/candelae_app/my_models"],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
