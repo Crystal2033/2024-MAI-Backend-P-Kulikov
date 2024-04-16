@@ -6,5 +6,11 @@ from django.db import models
 #         self.uid = uid
 #         self.name = name
 
-# class Ingredient(models.Model):
-#     name = models.CharField(max_length=30)
+class Ingredient(models.Model):
+    name = models.CharField(max_length=30)
+
+    class Meta:
+        ordering = ["name"]
+
+    def __str__(self):
+        return self.name
