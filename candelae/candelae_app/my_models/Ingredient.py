@@ -6,5 +6,5 @@ from django.db import models
 #         self.uid = uid
 #         self.name = name
 
-class Ingredient(models.Model):
-    name = models.CharField(max_length=30)
+# class Ingredient(models.Model):
+#     name = models.CharField(max_length=30)
