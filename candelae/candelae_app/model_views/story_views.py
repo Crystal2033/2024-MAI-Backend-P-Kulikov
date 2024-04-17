@@ -6,8 +6,8 @@ from ..exceptions.DataNotFound import DataNotFoundException
 from ..exceptions.InputDataError import InputDataException
 
 def get_all_stories(request):
-    json_dict = {"stories": "all"}
-    return JsonResponse(json_dict)
+    stories = Story.objects.all()
+    return JsonResponse({"stories": FromQuerySetToJSON.convert(stories)})
 
 
 def get_stories_contains_short_name_or_description(request):
@@ -16,7 +16,7 @@ def get_stories_contains_short_name_or_description(request):
         raise InputDataException("Your query string can not be empty")
 
     stories_request = (Story.objects
-                       .filter(Q(short_story_name__contains=searching_str) | Q(description__contains=searching_str))
+                       .filter(Q(short_story_name__icontains=searching_str) | Q(description__icontains=searching_str))
                        .all())
     stories = FromQuerySetToJSON.convert(stories_request)
     return JsonResponse({"stories": stories})

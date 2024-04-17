@@ -7,8 +7,8 @@ from ..exceptions.InputDataError import InputDataException
 
 
 def get_all_candles(request):
-    json_dict = {"candles": request.GET.get('q')}
-    return JsonResponse(json_dict)
+    candles = Candle.objects.all()
+    return JsonResponse({"candles": FromQuerySetToJSON.convert(candles)})
 
 
 def get_candles_contains_name_or_description_or_story(request):
@@ -17,7 +17,7 @@ def get_candles_contains_name_or_description_or_story(request):
         raise InputDataException("Your query string can not be empty")
 
     candles_request = (Candle.objects
-                       .filter(Q(name__contains=searching_str) | Q(description__contains=searching_str))
+                       .filter(Q(name__icontains=searching_str) | Q(description__icontains=searching_str))
                        .all())
     candles = FromQuerySetToJSON.convert(candles_request)
     return JsonResponse({"candles": candles})

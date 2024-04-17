@@ -5,9 +5,10 @@ from ..util.ArrayToJSONSerializer import FromQuerySetToJSON
 from ..exceptions.DataNotFound import DataNotFoundException
 from ..exceptions.InputDataError import InputDataException
 
+
 def get_all_ingredients(request):
-    json_dict = {"ingredients": request.GET.get('q', 'Nothing')}
-    return JsonResponse(json_dict)
+    ingredients = Ingredient.objects.all()
+    return JsonResponse({"ingredients": FromQuerySetToJSON.convert(ingredients)})
 
 
 def get_ingredients_contains_name(request):
@@ -16,7 +17,7 @@ def get_ingredients_contains_name(request):
         raise InputDataException("Your query string can not be empty")
 
     ingredients_request = (Ingredient.objects
-                           .filter(name__contains=searching_str)
+                           .filter(name__icontains=searching_str)
                            .all())
     ingredients = FromQuerySetToJSON.convert(ingredients_request)
     return JsonResponse({"ingredients": ingredients})
