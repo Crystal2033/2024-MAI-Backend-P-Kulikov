@@ -1,8 +1,3 @@
-# class Story:
-#     def __init__(self, uid, description):
-#         self.uid = uid
-#         self.desc = description
-
 from django.db import models
 from .StoryType import StoryType
 
