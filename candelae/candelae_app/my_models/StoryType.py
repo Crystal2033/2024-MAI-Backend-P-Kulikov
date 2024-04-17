@@ -7,10 +7,13 @@ from django.db import models
 
 
 class StoryType(models.Model):
-    name = models.CharField(max_length=70, verbose_name="name")
+    name = models.CharField(max_length=70, verbose_name="Тип сюжета")
 
     class Meta:
+        verbose_name = "Тип сюжета"
+        verbose_name_plural = "Типы сюжетов"
         ordering = ["name"]
+        db_table = "story_type"
 
     def __str__(self):
         return self.name
