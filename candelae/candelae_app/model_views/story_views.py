@@ -26,7 +26,7 @@ def create_story(request):
         print("POST")
         body_unicode = request.body.decode('utf-8')
         body = json.loads(body_unicode)
-        print(body)
+
         story_types = []
         set_of_types = set()
         for story_type_id in body["story_types"]:
