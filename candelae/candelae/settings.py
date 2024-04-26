@@ -81,11 +81,11 @@ WSGI_APPLICATION = 'candelae.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'candelae_main',
+        'NAME': 'candelae_main',  # candelae_main_docker
         'USER': 'paul_admin',
         'PASSWORD': '12345',
-        'HOST': '127.0.0.1',
-        'PORT': '5432'
+        'HOST': 'host.docker.internal',
+        'PORT': 5432
     }
 }
 

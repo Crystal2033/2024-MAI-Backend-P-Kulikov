@@ -1,20 +1,36 @@
 services:
+  django-app:
+    build:
+      context: candelae
+    ports:
+      - 9999:9999
+    depends_on:
+      - db
+      - nginx
+    networks:
+      main:
+        aliases:
+          - django-net
+
+
   db:
     image: postgres
     restart: always
     environment:
       POSTGRES_USER: paul_admin
-      POSTGRES_DB: candelae_main
+      POSTGRES_DB: candelae_main_docker
       POSTGRES_PASSWORD: 12345
     volumes:
-      - ./configurations/db/init.sql:/docker-entrypoint-initdb.d/init.sql
+      - ./candelae/configs/db/init.sql:/docker-entrypoint-initdb.d/init.sql
     ports:
       - 5432:5432
+    networks:
+      - db
 
   web:
     container_name: wsgi_app
     build:
-      context: configurations/python-deps
+      context: candelae/configs/wsgi
     ports:
       - 8000:81
     networks:
@@ -25,7 +41,7 @@ services:
 
   nginx:
     build:
-      context: configurations/nginx
+      context: candelae/configs/nginx
     container_name: nginxFront
 #    links:
 #      - web:web
@@ -41,4 +57,6 @@ services:
           - nginx-net
 
 networks:
+  db:
+    driver: bridge
   main:

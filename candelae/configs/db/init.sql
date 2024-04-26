@@ -1,2 +1,2 @@
 CREATE USER paul_admin WITH SUPERUSER PASSWORD '12345';
-CREATE DATABASE candelae_main;
+CREATE DATABASE candelae_main_docker;
