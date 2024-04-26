@@ -27,6 +27,7 @@ def create_story(request):
         body_unicode = request.body.decode('utf-8')
         body = json.loads(body_unicode)
 
+        # DUPLICATE candle_views.py
         story_types = []
         set_of_types = set()
         for story_type_id in body["story_types"]:
@@ -35,6 +36,7 @@ def create_story(request):
             set_of_types.add(story_type_id)
             story_type = StoryType.objects.get(pk=story_type_id)
             story_types.append(story_type)
+        # DUPLICATE
 
         story = Story.objects.create(short_story_name=body["short_story_name"], description=body["description"])
         story.story_types.set(story_types)

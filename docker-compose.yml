@@ -1,4 +1,16 @@
 services:
+  db:
+    image: postgres
+    restart: always
+    environment:
+      POSTGRES_USER: paul_admin
+      POSTGRES_DB: candelae_main
+      POSTGRES_PASSWORD: 12345
+    volumes:
+      - ./configurations/db/init.sql:/docker-entrypoint-initdb.d/init.sql
+    ports:
+      - 5432:5432
+
   web:
     container_name: wsgi_app
     build:
@@ -9,6 +21,7 @@ services:
       main:
         aliases:
           - web-net
+
 
   nginx:
     build:

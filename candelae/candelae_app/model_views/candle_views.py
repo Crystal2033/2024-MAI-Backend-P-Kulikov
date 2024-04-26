@@ -35,6 +35,7 @@ def create_candle(request):
         except ObjectDoesNotExist:
             return JsonResponse({"error": 404, "message": "Story object not found"}, status=404)
 
+        #DUPLICATE story_views.py
         ingredients = []
         set_of_ingredients = set()
         for ingredient_id in body["ingredients"]:
@@ -43,6 +44,7 @@ def create_candle(request):
             set_of_ingredients.add(ingredient_id)
             ingredient = Ingredient.objects.get(pk=ingredient_id)
             ingredients.append(ingredient)
+        # DUPLICATE
 
         candle = Candle.objects.create(name=body["name"], description=body["description"], story=corresponding_story)
         candle.ingredients.set(ingredients)
