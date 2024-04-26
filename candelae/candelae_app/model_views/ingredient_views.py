@@ -1,14 +1,35 @@
-from django.http import JsonResponse
+import json
 
+from django.forms.models import model_to_dict
+from django.http import JsonResponse
+from django.views.decorators.csrf import csrf_exempt
+
+from ..exceptions.InputDataError import InputDataException
 from ..my_models.Ingredient import Ingredient
 from ..util.ArrayToJSONSerializer import FromQuerySetToJSON
-from ..exceptions.DataNotFound import DataNotFoundException
-from ..exceptions.InputDataError import InputDataException
+from ..exceptions.NotCompatibleRequestException import NotCompatibleRequestException
 
 
 def get_all_ingredients(request):
-    ingredients = Ingredient.objects.all()
-    return JsonResponse({"ingredients": FromQuerySetToJSON.convert(ingredients)})
+    if request.method == "GET":
+        print("GET")
+        ingredients = Ingredient.objects.all()
+        return JsonResponse({"ingredients": FromQuerySetToJSON.convert(ingredients)})
+    else:
+        return JsonResponse({"error": 400, "message": "Unknown request method for current path"}, status=400)
+
+
+@csrf_exempt
+def create_ingredient(request):
+    if request.method == "POST":
+        print("POST")
+        body_unicode = request.body.decode('utf-8')
+        body = json.loads(body_unicode)
+        ingredient = Ingredient(**body)
+        ingredient.save()
+        return JsonResponse({"ingredient": model_to_dict(ingredient)})
+    else:
+        return JsonResponse({"error": 400, "message": "Unknown request method for current path"}, status=400)
 
 
 def get_ingredients_contains_name(request):

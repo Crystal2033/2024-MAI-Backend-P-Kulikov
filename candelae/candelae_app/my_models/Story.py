@@ -16,3 +16,6 @@ class Story(models.Model):
 
     def __str__(self):
         return self.short_story_name
+
+    def from_json_to_model(self):
+        pass

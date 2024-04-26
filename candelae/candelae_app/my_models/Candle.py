@@ -17,3 +17,7 @@ class Candle(models.Model):
 
     def __str__(self):
         return self.name
+
+
+    def from_json_to_model(self):
+        pass

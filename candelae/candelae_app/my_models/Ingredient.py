@@ -17,3 +17,6 @@ class Ingredient(models.Model):
 
     def __str__(self):
         return self.name
+
+    def from_json_to_model(self, json_format):
+        pass

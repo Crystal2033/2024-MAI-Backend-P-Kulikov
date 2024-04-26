@@ -1,14 +1,36 @@
+import json
+
 from django.db.models import Q
+from django.forms import model_to_dict
 from django.http import JsonResponse
-from ..util.ArrayToJSONSerializer import FromQuerySetToJSON
-from ..my_models.Candle import Candle
-from ..exceptions.DataNotFound import DataNotFoundException
+from django.views.decorators.csrf import csrf_exempt
+
 from ..exceptions.InputDataError import InputDataException
+from ..exceptions.NotCompatibleRequestException import NotCompatibleRequestException
+from ..my_models.Candle import Candle
+from ..util.ArrayToJSONSerializer import FromQuerySetToJSON
 
 
 def get_all_candles(request):
-    candles = Candle.objects.all()
-    return JsonResponse({"candles": FromQuerySetToJSON.convert(candles)})
+    if request.method == "GET":
+        print("GET")
+        candles = Candle.objects.all()
+        return JsonResponse({"candles": FromQuerySetToJSON.convert(candles)})
+    else:
+        return JsonResponse({"error": 400, "message": "Unknown request method for current path"}, status=400)
+
+
+@csrf_exempt
+def create_candle(request):
+    if request.method == "POST":
+        print("POST")
+        body_unicode = request.body.decode('utf-8')
+        body = json.loads(body_unicode)
+        candle = Candle(**body)
+        candle.save()
+        return JsonResponse({"ingredient": model_to_dict(candle)})
+    else:
+        return JsonResponse({"error": 400, "message": "Unknown request method for current path"}, status=400)
 
 
 def get_candles_contains_name_or_description_or_story(request):
