@@ -26,9 +26,9 @@ SECRET_KEY = 'django-insecure-g9pvat^35@mli4j@9)myow15avu_9#3+^h_i(t8!u@=#q&7@qc
 DEBUG = True
 
 ALLOWED_HOSTS = [
-    "host.docker.internal",
     "127.0.0.1",
-    "localhost"
+    "localhost",
+    "django-app"
 ]
 
 
@@ -80,11 +80,11 @@ WSGI_APPLICATION = 'candelae.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'candelae_main',  # candelae_main_docker
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'candelae_main_docker',
         'USER': 'paul_admin',
         'PASSWORD': '12345',
-        'HOST': 'host.docker.internal',
+        'HOST': 'postgres_db_host',
         'PORT': 5432
     }
 }

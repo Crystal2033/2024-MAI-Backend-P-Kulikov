@@ -5,17 +5,26 @@ services:
     ports:
       - 9999:9999
     depends_on:
-      - db
-      - nginx
+      db:
+        condition: service_healthy
     networks:
-      main:
-        aliases:
-          - django-net
+      - django_network
+    entrypoint: bash -c "python manage.py makemigrations && python manage.py migrate && python manage.py runserver 0.0.0.0:9999"
+
+
 
 
   db:
-    image: postgres
-    restart: always
+    image: postgres:latest
+    hostname: postgres_db_host
+    networks:
+      - django_network
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready -U paul_admin -d candelae_main_docker" ]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 10s
     environment:
       POSTGRES_USER: paul_admin
       POSTGRES_DB: candelae_main_docker
@@ -23,11 +32,12 @@ services:
     volumes:
       - ./candelae/configs/db/init.sql:/docker-entrypoint-initdb.d/init.sql
     ports:
-      - 5432:5432
-    networks:
-      - db
+      - 15432:5432
+
 
   web:
+    links:
+      - django-app
     container_name: wsgi_app
     build:
       context: candelae/configs/wsgi
@@ -43,10 +53,10 @@ services:
     build:
       context: candelae/configs/nginx
     container_name: nginxFront
-#    links:
-#      - web:web
     depends_on:
-      - web
+      - django-app
+    links:
+      - django-app:django-app
     ports:
       - 8080:81 # map: host -> docker, 81 because port 80 is for default conf.d
     volumes:
@@ -55,8 +65,9 @@ services:
       main:
         aliases:
           - nginx-net
+      django_network:
 
 networks:
-  db:
+  django_network:
     driver: bridge
   main:
