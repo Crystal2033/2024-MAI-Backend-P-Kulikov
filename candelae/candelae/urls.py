@@ -20,9 +20,9 @@ from django.urls import path, include
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/', include("candelae_app.urls")),
-    path('api/', include("candelae_app.grouped_urls.candle_urls")),
-    path('api/', include("candelae_app.grouped_urls.ingredient_urls")),
-    path('api/', include("candelae_app.grouped_urls.story_urls")),
-    path('api/', include("candelae_app.grouped_urls.story_type_urls")),
+    path('api/candles/', include("candelae_app.grouped_urls.candle_urls")),
+    path('api/ingredients/', include("candelae_app.grouped_urls.ingredient_urls")),
+    path('api/story_types/', include("candelae_app.grouped_urls.story_urls")),
+    path('api/stories/', include("candelae_app.grouped_urls.story_type_urls")),
     #path("web/", include("TODO: URLS FOR WEB"))
 ]
